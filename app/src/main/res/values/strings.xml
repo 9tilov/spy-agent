@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="base_server_url" translatable="false">http://90db4b97.ngrok.io/api/v1/</string>
+    <string name="app_name">SpyAgent</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="logout">Logout</string>
+    <string name="login">Login</string>
+</resources>
