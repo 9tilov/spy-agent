@@ -4,6 +4,7 @@ import android.support.annotation.WorkerThread;
 
 import com.moggot.spyagent.R;
 import com.moggot.spyagent.data.model.LoginResponse;
+import com.moggot.spyagent.data.model.SelfResponseModel;
 import com.moggot.spyagent.data.model.UserResponseModel;
 import com.moggot.spyagent.presentation.App;
 
@@ -18,13 +19,13 @@ public interface SpyApi {
 
     @POST("Login")
     @WorkerThread
-    Single<LoginResponse> login(@Query("id") long id, @Query("access_token") String access_token);
+    Single<LoginResponse> login(@Query("access_token") String access_token);
 
     @POST("Logout")
     @WorkerThread
-    Single<LoginResponse> logout(@Query("id") long id, @Query("access_token") String access_token);
+    Single<LoginResponse> logout();
 
     @GET("GetSelfInfo")
     @WorkerThread
-    Single<UserResponseModel> getSelfInfo(@Query("id") long id, @Query("friend_id") long friendId);
+    Single<SelfResponseModel> getSelfInfo();
 }

@@ -24,6 +24,10 @@ public class BasePresenter<T extends BaseView> {
         this.view = null;
     }
 
+    public void networkError() {
+        getViewOrThrow().showNetworkError();
+    }
+
     @Nullable
     private T getView() {
         return view;

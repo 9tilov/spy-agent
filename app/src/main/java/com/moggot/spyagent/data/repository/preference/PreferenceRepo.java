@@ -7,8 +7,8 @@ import com.moggot.spyagent.data.local.UserModel;
 
 public class PreferenceRepo {
 
-    private final static String KEY_USER_ID = "user_id";
-    private final static String KEY_ACCESS_TOKEN = "access_token";
+    private static final String KEY_USER_ID = "user_id";
+    private static final String KEY_ACCESS_TOKEN = "access_token";
 
     @NonNull
     private SharedPreferences sharedPreferences;

@@ -87,4 +87,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 .commitAllowingStateLoss();
     }
 
+    @Override
+    public void showNetworkError() {
+
+    }
 }

@@ -3,4 +3,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="logout">Выйти</string>
     <string name="login">Войти</string>
+    <string name="home">Домой</string>
+    <string name="favorites">Избранное</string>
+    <string name="profile">Профиль</string>
 </resources>

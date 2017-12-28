@@ -8,4 +8,8 @@ public class LoginResponse {
     @SerializedName("code")
     @Expose
     private int code;
+
+    public int getCode() {
+        return code;
+    }
 }

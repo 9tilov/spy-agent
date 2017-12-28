@@ -3,7 +3,7 @@ package com.moggot.spyagent.data.repository.network;
 import android.support.annotation.NonNull;
 
 import com.moggot.spyagent.data.api.SpyApi;
-import com.moggot.spyagent.data.local.UserModel;
+import com.moggot.spyagent.data.model.SelfResponseModel;
 import com.moggot.spyagent.data.model.UserResponseModel;
 import com.moggot.spyagent.data.repository.DataRepoImpl;
 import com.moggot.spyagent.data.repository.preference.PreferenceRepo;
@@ -23,8 +23,7 @@ public class NetworkRepo implements DataRepoImpl {
     }
 
     @Override
-    public Single<UserResponseModel> getSelfInfo() {
-        UserModel selfModel = preferenceRepo.getUser();
-        return spyApi.getSelfInfo(selfModel.getUserId(), 1000L);
+    public Single<SelfResponseModel> getSelfInfo() {
+        return spyApi.getSelfInfo();
     }
 }

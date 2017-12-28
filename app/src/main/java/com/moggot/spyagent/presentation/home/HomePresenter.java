@@ -1,26 +1,26 @@
-package com.moggot.spyagent.presentation.self;
+package com.moggot.spyagent.presentation.home;
 
 import android.support.annotation.NonNull;
 
+import com.moggot.spyagent.di.scope.UserScope;
 import com.moggot.spyagent.domain.SelfInteractor;
 import com.moggot.spyagent.presentation.common.BasePresenter;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-@Singleton
-public class SelfPresenter extends BasePresenter<SelfView> {
+@UserScope
+public class HomePresenter extends BasePresenter<HomeView> {
 
     @NonNull
     private SelfInteractor selfInteractor;
 
     @Inject
-    public SelfPresenter(@NonNull SelfInteractor selfInteractor) {
+    public HomePresenter(@NonNull SelfInteractor selfInteractor) {
         this.selfInteractor = selfInteractor;
     }
 
     public void getSelfInfo() {
         selfInteractor.getSelfInfo()
-                .subscribe(userResponseModel -> {});
+                .subscribe(userResponseModel -> getViewOrThrow().showSelfInfo(userResponseModel));
     }
 }

@@ -1,6 +1,8 @@
 package com.moggot.spyagent.di.module;
 
 import com.moggot.spyagent.data.api.SpyApi;
+import com.moggot.spyagent.data.network.AuthInterseptor;
+import com.moggot.spyagent.data.network.CommonServerModel;
 import com.moggot.spyagent.data.repository.DataRepoImpl;
 import com.moggot.spyagent.data.repository.network.NetworkRepo;
 import com.moggot.spyagent.data.repository.preference.PreferenceRepo;
@@ -30,9 +32,22 @@ public class NetModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(HttpLoggingInterceptor loggingInterceptor) {
+    AuthInterseptor provideAuthInterseptor(CommonServerModel commonServerModel) {
+        return new AuthInterseptor(commonServerModel);
+    }
+
+    @Provides
+    @Singleton
+    CommonServerModel provideCommonServerModel(PreferenceRepo preferenceRepo) {
+        return new CommonServerModel(preferenceRepo);
+    }
+
+    @Provides
+    @Singleton
+    OkHttpClient provideOkHttpClient(HttpLoggingInterceptor loggingInterceptor, AuthInterseptor authInterseptor) {
         return new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .addInterceptor(authInterseptor)
                 .build();
     }
 

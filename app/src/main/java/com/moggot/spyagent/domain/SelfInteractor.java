@@ -3,9 +3,8 @@ package com.moggot.spyagent.domain;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
-import com.moggot.spyagent.data.model.UserResponseModel;
+import com.moggot.spyagent.data.model.SelfResponseModel;
 import com.moggot.spyagent.data.repository.DataRepoImpl;
-import com.moggot.spyagent.data.repository.network.NetworkRepo;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -21,7 +20,7 @@ public class SelfInteractor {
     }
 
     @WorkerThread
-    public Single<UserResponseModel> getSelfInfo() {
+    public Single<SelfResponseModel> getSelfInfo() {
         return dataRepo.getSelfInfo()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

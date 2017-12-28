@@ -2,8 +2,8 @@ package com.moggot.spyagent.data.local;
 
 public class UserModel {
 
-    private long userId;
-    private String accessToken;
+    private final long userId;
+    private final String accessToken;
 
     public UserModel(long userId, String accessToken) {
         this.userId = userId;

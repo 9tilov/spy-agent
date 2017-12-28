@@ -1,26 +1,25 @@
 package com.moggot.spyagent.presentation.main;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 
 import com.moggot.spyagent.R;
 import com.moggot.spyagent.presentation.common.BaseFragment;
-import com.moggot.spyagent.presentation.login.LoginActivity;
-import com.moggot.spyagent.presentation.self.SelfFragment;
+import com.moggot.spyagent.presentation.favorites.FavoritesFragment;
+import com.moggot.spyagent.presentation.home.HomeFragment;
+import com.moggot.spyagent.presentation.profile.ProfileFragment;
 import com.moggot.spyagent.presentation.ui.widget.MainToolbar;
-import com.vk.sdk.VKSdk;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     MainToolbar toolbar;
+    @BindView(R.id.bottom_navigation)
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,35 +27,45 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        SelfFragment fragment = SelfFragment.newInstance();
-        setContentFragment(fragment, fragment.getFragmentTag());
+        toolbar.setTitle(getString(R.string.app_name));
+        loadFragment(HomeFragment.newInstance());
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                item -> {
+                    switch (item.getItemId()) {
+                        case R.id.action_home:
+                            toolbar.setTitle(getString(R.string.app_name));
+                            loadFragment(HomeFragment.newInstance());
+                            return true;
+                        case R.id.action_favorites:
+                            toolbar.setTitle(getString(R.string.favorites));
+                            loadFragment(FavoritesFragment.newInstance());
+                            return true;
+                        case R.id.action_profile:
+                            toolbar.setTitle(getString(R.string.profile));
+                            loadFragment(ProfileFragment.newInstance());
+                            return true;
+                        default:
+                            toolbar.setTitle(getString(R.string.app_name));
+                            loadFragment(HomeFragment.newInstance());
+                            return true;
+                    }
+                });
     }
 
-    @OnClick(R.id.main_toolbar_exit)
-    public void exit() {
-        VKSdk.logout();
-        if (!VKSdk.isLoggedIn()) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
-        }
+    private void loadFragment(BaseFragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_container, fragment, fragment.getFragmentTag())
+                .commit();
     }
 
-    private void setContentFragment(BaseFragment contentFragment, String tag) {
-        if (getContentFragment(tag) == null) {
-            final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.main_container, contentFragment, tag);
-            ft.addToBackStack(null);
-            ft.commit();
-        }
-    }
-
-    private BaseFragment getContentFragment(String tag) {
-        final Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-        if (fragment instanceof BaseFragment) {
-            return (BaseFragment) fragment;
-        }
-        return null;
-    }
+//    @OnClick(R.id.main_toolbar_exit)
+//    public void exit() {
+//        VKSdk.logout();
+//        if (!VKSdk.isLoggedIn()) {
+//            Intent intent = new Intent(this, LoginActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent);
+//            finish();
+//        }
+//    }
 }
