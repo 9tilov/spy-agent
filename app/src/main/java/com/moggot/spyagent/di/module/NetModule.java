@@ -7,6 +7,8 @@ import com.moggot.spyagent.data.repository.DataRepoImpl;
 import com.moggot.spyagent.data.repository.network.NetworkRepo;
 import com.moggot.spyagent.data.repository.preference.PreferenceRepo;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -46,6 +48,8 @@ public class NetModule {
     @Singleton
     OkHttpClient provideOkHttpClient(HttpLoggingInterceptor loggingInterceptor, AuthInterseptor authInterseptor) {
         return new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(authInterseptor)
                 .build();

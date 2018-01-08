@@ -5,7 +5,7 @@ import android.support.annotation.WorkerThread;
 import com.moggot.spyagent.R;
 import com.moggot.spyagent.data.model.LoginResponse;
 import com.moggot.spyagent.data.model.SelfResponseModel;
-import com.moggot.spyagent.data.model.UserResponseModel;
+import com.moggot.spyagent.data.model.TopOfLikes;
 import com.moggot.spyagent.presentation.App;
 
 import io.reactivex.Single;
@@ -25,7 +25,11 @@ public interface SpyApi {
     @WorkerThread
     Single<LoginResponse> logout();
 
-    @GET("GetSelfInfo")
+    @GET("Free/Self/GetInfo")
     @WorkerThread
     Single<SelfResponseModel> getSelfInfo();
+
+    @GET("Free/Self/GetTopLikes")
+    @WorkerThread
+    Single<TopOfLikes> getTopLikes(@Query("top_count") int topCount);
 }

@@ -24,6 +24,4 @@ public class AuthInterseptor implements Interceptor {
                 .build();
         return chain.proceed(request);
     }
-
-
 }

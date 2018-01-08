@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
 import com.moggot.spyagent.data.model.SelfResponseModel;
+import com.moggot.spyagent.data.model.TopOfLikes;
 import com.moggot.spyagent.data.repository.DataRepoImpl;
 
 import io.reactivex.Single;
@@ -22,6 +23,13 @@ public class SelfInteractor {
     @WorkerThread
     public Single<SelfResponseModel> getSelfInfo() {
         return dataRepo.getSelfInfo()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @WorkerThread
+    public Single<TopOfLikes> getSelfTopLikes(int topCount) {
+        return dataRepo.getSelfTopLikes(topCount)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

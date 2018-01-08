@@ -57,15 +57,4 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.frame_container, fragment, fragment.getFragmentTag())
                 .commit();
     }
-
-//    @OnClick(R.id.main_toolbar_exit)
-//    public void exit() {
-//        VKSdk.logout();
-//        if (!VKSdk.isLoggedIn()) {
-//            Intent intent = new Intent(this, LoginActivity.class);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//            startActivity(intent);
-//            finish();
-//        }
-//    }
 }

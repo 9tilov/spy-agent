@@ -15,12 +15,17 @@ public class HomePresenter extends BasePresenter<HomeView> {
     private SelfInteractor selfInteractor;
 
     @Inject
-    public HomePresenter(@NonNull SelfInteractor selfInteractor) {
+    HomePresenter(@NonNull SelfInteractor selfInteractor) {
         this.selfInteractor = selfInteractor;
     }
 
-    public void getSelfInfo() {
-        selfInteractor.getSelfInfo()
-                .subscribe(userResponseModel -> getViewOrThrow().showSelfInfo(userResponseModel));
+    void getInfo() {
+        unSubscribeOnDetach(selfInteractor.getSelfInfo()
+                .doOnSuccess(selfResponseModel -> {
+                    getViewOrThrow().showSelfInfo(selfResponseModel);
+                    selfInteractor.getSelfTopLikes(5)
+                            .subscribe(topOfLikes -> getViewOrThrow().showListTopLikes(topOfLikes));
+                })
+                .subscribe());
     }
 }
