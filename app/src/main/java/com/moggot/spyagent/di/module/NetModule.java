@@ -1,12 +1,14 @@
 package com.moggot.spyagent.di.module;
 
-import com.moggot.spyagent.data.api.SpyApi;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.moggot.spyagent.data.network.api.SpyApi;
 import com.moggot.spyagent.data.network.AuthInterseptor;
-import com.moggot.spyagent.data.network.CommonServerModel;
-import com.moggot.spyagent.data.repository.DataRepoImpl;
+import com.moggot.spyagent.data.repository.local.DatabaseRepo;
 import com.moggot.spyagent.data.repository.network.NetworkRepo;
 import com.moggot.spyagent.data.repository.preference.PreferenceRepo;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -34,24 +36,25 @@ public class NetModule {
 
     @Provides
     @Singleton
-    AuthInterseptor provideAuthInterseptor(CommonServerModel commonServerModel) {
-        return new AuthInterseptor(commonServerModel);
+    AuthInterseptor provideAuthInterseptor(PreferenceRepo preferenceRepo) {
+        return new AuthInterseptor(preferenceRepo);
     }
 
     @Provides
     @Singleton
-    CommonServerModel provideCommonServerModel(PreferenceRepo preferenceRepo) {
-        return new CommonServerModel(preferenceRepo);
+    StethoInterceptor provideStethoInterceptor() {
+        return new StethoInterceptor();
     }
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(HttpLoggingInterceptor loggingInterceptor, AuthInterseptor authInterseptor) {
+    OkHttpClient provideOkHttpClient(HttpLoggingInterceptor loggingInterceptor, AuthInterseptor authInterseptor, StethoInterceptor stethoInterceptor) {
         return new OkHttpClient.Builder()
                 .readTimeout(60, TimeUnit.SECONDS)
                 .connectTimeout(60, TimeUnit.SECONDS)
-                .addInterceptor(loggingInterceptor)
                 .addInterceptor(authInterseptor)
+                .addInterceptor(loggingInterceptor)
+                .addNetworkInterceptor(stethoInterceptor)
                 .build();
     }
 
@@ -75,7 +78,13 @@ public class NetModule {
 
     @Provides
     @Singleton
-    DataRepoImpl provideNetworkRepo(SpyApi spyApi, PreferenceRepo preferenceRepo) {
-        return new NetworkRepo(spyApi, preferenceRepo);
+    NetworkRepo provideNetworkRepo(SpyApi spyApi, DatabaseRepo databaseRepo) {
+        return new NetworkRepo(spyApi, databaseRepo);
+    }
+
+    @Provides
+    @Singleton
+    Executor provideExecutor() {
+        return Executors.newFixedThreadPool(2);
     }
 }

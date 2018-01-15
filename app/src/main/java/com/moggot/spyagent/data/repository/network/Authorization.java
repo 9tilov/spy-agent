@@ -2,10 +2,9 @@ package com.moggot.spyagent.data.repository.network;
 
 import android.support.annotation.NonNull;
 
-import com.moggot.spyagent.data.api.SpyApi;
-import com.moggot.spyagent.data.local.UserModel;
 import com.moggot.spyagent.data.model.LoginResponse;
-import com.moggot.spyagent.data.network.CommonServerModel;
+import com.moggot.spyagent.data.model.SelfModel;
+import com.moggot.spyagent.data.repository.local.DatabaseRepo;
 import com.moggot.spyagent.data.repository.preference.PreferenceRepo;
 
 import io.reactivex.Single;
@@ -13,26 +12,21 @@ import io.reactivex.Single;
 public class Authorization {
 
     @NonNull
-    private SpyApi spyApi;
+    private NetworkRepo networkRepo;
     @NonNull
-    private PreferenceRepo preferenceRepo;
-    @NonNull
-    private CommonServerModel commonServerModel;
+    private DatabaseRepo databaseRepo;
 
-    public Authorization(@NonNull SpyApi spyApi, @NonNull PreferenceRepo preferenceRepo, CommonServerModel commonServerModel) {
-        this.spyApi = spyApi;
-        this.preferenceRepo = preferenceRepo;
-        this.commonServerModel = commonServerModel;
+    public Authorization(@NonNull NetworkRepo networkRepo, @NonNull DatabaseRepo databaseRepo) {
+        this.networkRepo = networkRepo;
+        this.databaseRepo = databaseRepo;
     }
 
-    public Single<LoginResponse> login(long userId, String accessToken) {
-        UserModel user = new UserModel(userId, accessToken);
-        preferenceRepo.saveUser(user);
-        commonServerModel.setUserId(user.getUserId());
-        return spyApi.login(accessToken);
+    public Single<LoginResponse> login(SelfModel selfModel) {
+        databaseRepo.saveCredentials(selfModel);
+        return networkRepo.login(selfModel.getAccessToken());
     }
 
     public Single<LoginResponse> logout() {
-        return spyApi.logout();
+        return networkRepo.logout();
     }
 }

@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
 import com.moggot.spyagent.data.model.LoginResponse;
+import com.moggot.spyagent.data.model.SelfModel;
 import com.moggot.spyagent.data.repository.network.Authorization;
 
 import io.reactivex.Single;
@@ -20,8 +21,8 @@ public class AuthInteractor {
     }
 
     @WorkerThread
-    public Single<LoginResponse> login(String userId, String accessToken) {
-        return authorization.login(Long.parseLong(userId), accessToken)
+    public Single<LoginResponse> login(SelfModel selfModel) {
+        return authorization.login(selfModel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

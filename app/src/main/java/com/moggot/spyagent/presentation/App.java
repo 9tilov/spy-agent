@@ -2,6 +2,7 @@ package com.moggot.spyagent.presentation;
 
 import android.app.Application;
 
+import com.facebook.stetho.Stetho;
 import com.moggot.spyagent.BuildConfig;
 import com.moggot.spyagent.di.component.AppComponent;
 import com.moggot.spyagent.di.component.DaggerAppComponent;
@@ -28,6 +29,8 @@ public class App extends Application {
                 .netModule(new NetModule())
                 .build();
         appComponent.inject(this);
+
+        Stetho.initializeWithDefaults(this);
 
         VKSdk.initialize(this);
         if (BuildConfig.DEBUG) {

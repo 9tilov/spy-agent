@@ -21,11 +21,12 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
     void getInfo() {
         unSubscribeOnDetach(selfInteractor.getSelfInfo()
-                .doOnSuccess(selfResponseModel -> {
-                    getViewOrThrow().showSelfInfo(selfResponseModel);
+                .doOnComplete(() -> {
                     selfInteractor.getSelfTopLikes(5)
-                            .subscribe(topOfLikes -> getViewOrThrow().showListTopLikes(topOfLikes));
+                            .subscribe(topOfLikes -> {
+                                getViewOrThrow().showListTopLikes(topOfLikes);
+                            });
                 })
-                .subscribe());
+                .subscribe(selfResponseModel -> getViewOrThrow().showSelfInfo(selfResponseModel)));
     }
 }

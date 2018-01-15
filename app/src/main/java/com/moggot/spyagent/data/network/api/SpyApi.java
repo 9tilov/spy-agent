@@ -1,13 +1,14 @@
-package com.moggot.spyagent.data.api;
+package com.moggot.spyagent.data.network.api;
 
 import android.support.annotation.WorkerThread;
 
 import com.moggot.spyagent.R;
 import com.moggot.spyagent.data.model.LoginResponse;
-import com.moggot.spyagent.data.model.SelfResponseModel;
+import com.moggot.spyagent.data.model.SelfModel;
 import com.moggot.spyagent.data.model.TopOfLikes;
 import com.moggot.spyagent.presentation.App;
 
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -27,7 +28,7 @@ public interface SpyApi {
 
     @GET("Free/Self/GetInfo")
     @WorkerThread
-    Single<SelfResponseModel> getSelfInfo();
+    Single<SelfModel> getSelfInfo();
 
     @GET("Free/Self/GetTopLikes")
     @WorkerThread

@@ -13,14 +13,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.moggot.spyagent.R;
-import com.moggot.spyagent.data.model.SelfResponseModel;
+import com.moggot.spyagent.data.model.SelfModel;
 import com.moggot.spyagent.data.model.TopOfLikes;
 import com.moggot.spyagent.data.model.UserInfo;
 import com.moggot.spyagent.di.Injector;
 import com.moggot.spyagent.presentation.common.BaseFragment;
 import com.moggot.spyagent.presentation.home.adapter.FriendAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -58,11 +57,15 @@ public class HomeFragment extends BaseFragment implements HomeView {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        presenter.onAttach(this);
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.onAttach(this);
-//        presenter.getInfo();
-        initRecycler(null);
+        presenter.getInfo();
     }
 
     @Override
@@ -71,7 +74,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
     }
 
     @Override
-    public void showSelfInfo(SelfResponseModel selfModel) {
+    public void showSelfInfo(SelfModel selfModel) {
         tvName.setText(selfModel.getFirstName());
         tvSurname.setText(selfModel.getLastName());
         Glide.with(this)
@@ -86,14 +89,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
     }
 
     private void initRecycler(List<UserInfo> friendList) {
-        friendList = new ArrayList<>();
-        friendList.add(new UserInfo("https://pp.userapi.com/c837431/v837431149/51782/Vu1WtpSkrMM.jpg"));
-        friendList.add(new UserInfo("https://pp.userapi.com/c837431/v837431149/51782/Vu1WtpSkrMM.jpg"));
-        friendList.add(new UserInfo("https://pp.userapi.com/c837431/v837431149/51782/Vu1WtpSkrMM.jpg"));
-        friendList.add(new UserInfo("https://pp.userapi.com/c837431/v837431149/51782/Vu1WtpSkrMM.jpg"));
-        friendList.add(new UserInfo("https://pp.userapi.com/c837431/v837431149/51782/Vu1WtpSkrMM.jpg"));
-        friendList.add(new UserInfo("https://pp.userapi.com/c837431/v837431149/51782/Vu1WtpSkrMM.jpg"));
-        friendList.add(new UserInfo("https://pp.userapi.com/c837431/v837431149/51782/Vu1WtpSkrMM.jpg"));
         rvTopFriends.setHasFixedSize(true);
 
         // use a linear layout manager
