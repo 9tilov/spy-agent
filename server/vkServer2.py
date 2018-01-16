@@ -34,7 +34,7 @@ def getLikeMap(i, user_id, token):
 	additional_codes = []
 
 	while _offset < photo_count or _offset == 0:
-		print('current photo offset: ', _offset)
+		#print('current photo offset: ', _offset)
 
 		session = vk.Session(access_token=token)
 		api = vk.API(session)
