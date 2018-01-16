@@ -50,7 +50,7 @@ def getLikeMap(i, user_id, token):
 			code += 'API.likes.getList({"type": "photo", "owner_id":%s, "item_id": %s, "extended": 1, "fields": ["sex", "bdate", "photo_200"], "count": 1000, "offset": %s }),' % (str(i), p['pid'], like_offset)
 			if (l % 24 == 0 and l != 0) or l == len(photos[1:]) - 1:
 
-				print('processing bucket: ', l)
+				print('processing  bucket: ', l)
 				code += '];'
 				params = dict(code=code, access_token=token)
 				res = requests.post(url=url, data=params)
