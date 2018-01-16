@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.moggot.spyagent.R;
+import com.moggot.spyagent.data.model.SelfModel;
 import com.moggot.spyagent.di.Injector;
 import com.moggot.spyagent.presentation.main.MainActivity;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
+import com.vk.sdk.util.VKUtil;
+
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -27,6 +31,9 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         setContentView(R.layout.activity_login);
         Injector.getLoginComponent().inject(this);
         presenter.onAttach(this);
+
+        String[] fingerprints = VKUtil.getCertificateFingerprint(this, this.getPackageName());
+        Timber.d("fingerprints = " + Arrays.toString(fingerprints));
         VKSdk.wakeUpSession(this, new VKCallback<VKSdk.LoginState>() {
             @Override
             public void onResult(VKSdk.LoginState res) {
@@ -56,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
             @Override
             public void onResult(VKAccessToken res) {
-                presenter.login(res.userId, res.accessToken);
+                presenter.login(new SelfModel(Long.valueOf(res.userId), res.accessToken));
             }
 
             @Override
@@ -87,4 +94,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 .commitAllowingStateLoss();
     }
 
+    @Override
+    public void showNetworkError() {
+
+    }
 }

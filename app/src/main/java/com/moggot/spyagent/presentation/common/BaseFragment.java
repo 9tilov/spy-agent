@@ -19,7 +19,7 @@ public abstract class BaseFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
     }
 
-    protected abstract String getFragmentTag();
+    public abstract String getFragmentTag();
 
     @Override
     public void onDestroyView() {

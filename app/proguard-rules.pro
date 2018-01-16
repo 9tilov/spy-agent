@@ -20,6 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+#Retrofit
 -dontwarn okio.**
 -dontwarn javax.annotation.**
 
@@ -33,3 +34,11 @@
 -keepattributes Exceptions
 
 -dontwarn com.google.errorprone.annotations.*
+
+#Glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}

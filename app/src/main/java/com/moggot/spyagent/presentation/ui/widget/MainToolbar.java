@@ -19,8 +19,6 @@ public class MainToolbar extends RelativeLayout {
     Toolbar toolbar;
     @BindView(R.id.main_toolbar_title)
     TextView tvTitle;
-    @BindView(R.id.main_toolbar_exit)
-    TextView tvExit;
 
     public MainToolbar(Context context) {
         this(context, null);
@@ -39,8 +37,8 @@ public class MainToolbar extends RelativeLayout {
     public void setNavigationButton() {
     }
 
-    public void setTvTitle(CharSequence tvTitle) {
-        this.tvTitle.setText(tvTitle);
+    public void setTitle(String title) {
+        this.tvTitle.setText(title);
     }
 
     public Toolbar getWrappedToolbar() {
