@@ -38,7 +38,7 @@ def getLikeMap(i, user_id, token):
 
 		session = vk.Session(access_token=token)
 		api = vk.API(session)
-		photos = api.photos.getAll(owner_id = str(i), count = 200, extended = 1, offset = _offset)
+		photos = api.photos.getAll(owner_id =  str(i), count = 200, extended = 1, offset = _offset)
 		photo_count = photos[0]
 		print(photo_count)
 		code = 'return ['
