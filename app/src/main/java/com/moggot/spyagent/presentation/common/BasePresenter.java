@@ -21,7 +21,12 @@ public class BasePresenter<T extends BaseView> {
     }
 
     public void onDetach() {
+        disposable.clear();
         this.view = null;
+    }
+
+    public void networkError() {
+        getViewOrThrow().showNetworkError();
     }
 
     @Nullable

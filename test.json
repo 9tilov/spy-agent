@@ -1,8 +1,6 @@
-[
-  {
-    'uid': 1,
-    'last_name': 'Дуров',
-    'first_name': 'Павел',
-    'photo_200': 'https://pp.userapi.com/c836333/v836333001/31191/qC6rVW5YSD8.jpg'
-  }
-]
+{
+  'last_name': 'Дуров',
+  'first_name': 'Павел',
+  'code': 200,
+  'photo_url': 'https://pp.userapi.com/c836333/v836333001/31191/qC6rVW5YSD8.jpg'
+}

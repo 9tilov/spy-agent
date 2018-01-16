@@ -2,9 +2,9 @@ package com.moggot.spyagent.di.module;
 
 import android.support.annotation.NonNull;
 
-import com.moggot.spyagent.data.api.SpyApi;
-import com.moggot.spyagent.data.repository.network.Authtorization;
-import com.moggot.spyagent.data.repository.preference.PreferenceRepo;
+import com.moggot.spyagent.data.repository.local.DatabaseRepo;
+import com.moggot.spyagent.data.repository.network.Authorization;
+import com.moggot.spyagent.data.repository.network.NetworkRepo;
 import com.moggot.spyagent.di.scope.LoginScope;
 import com.moggot.spyagent.domain.AuthInteractor;
 
@@ -16,13 +16,13 @@ public class LoginModule {
 
     @Provides
     @LoginScope
-    Authtorization provideAuthtorization(SpyApi spyApi, PreferenceRepo preferenceRepo) {
-        return new Authtorization(spyApi, preferenceRepo);
+    Authorization provideAuthtorization(NetworkRepo networkRepo, DatabaseRepo databaseRepo) {
+        return new Authorization(networkRepo, databaseRepo);
     }
 
     @Provides
     @LoginScope
-    AuthInteractor provideAuthInteractor(@NonNull Authtorization authtorization) {
-        return new AuthInteractor(authtorization);
+    AuthInteractor provideAuthInteractor(@NonNull Authorization authorization) {
+        return new AuthInteractor(authorization);
     }
 }

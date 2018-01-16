@@ -3,12 +3,12 @@ package com.moggot.spyagent.data.repository.preference;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
-import com.moggot.spyagent.data.local.UserModel;
+import com.moggot.spyagent.data.model.SelfModel;
 
 public class PreferenceRepo {
 
-    private final static String KEY_USER_ID = "user_id";
-    private final static String KEY_ACCESS_TOKEN = "access_token";
+    private static final String KEY_USER_ID = "user_id";
+    private static final String KEY_ACCESS_TOKEN = "access_token";
 
     @NonNull
     private SharedPreferences sharedPreferences;
@@ -17,16 +17,16 @@ public class PreferenceRepo {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public void saveUser(@NonNull UserModel userModel) {
-        long userid = userModel.getUserId();
+    public void saveUser(@NonNull SelfModel self) {
+        long userid = self.getUserId();
         sharedPreferences.edit().putLong(KEY_USER_ID, userid).apply();
-        String accessToken = userModel.getAccessToken();
+        String accessToken = self.getAccessToken();
         sharedPreferences.edit().putString(KEY_ACCESS_TOKEN, accessToken).apply();
     }
 
-    public UserModel getUser() {
+    public SelfModel getUser() {
         long userId = sharedPreferences.getLong(KEY_USER_ID, 1);
         String accessToken = sharedPreferences.getString(KEY_ACCESS_TOKEN, "");
-        return new UserModel(userId, accessToken);
+        return new SelfModel(userId, accessToken);
     }
 }

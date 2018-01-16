@@ -2,6 +2,7 @@ package com.moggot.spyagent.presentation.login;
 
 import android.support.annotation.NonNull;
 
+import com.moggot.spyagent.data.model.SelfModel;
 import com.moggot.spyagent.di.scope.LoginScope;
 import com.moggot.spyagent.domain.AuthInteractor;
 import com.moggot.spyagent.presentation.common.BasePresenter;
@@ -27,9 +28,9 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         getViewOrThrow().showMainActivity();
     }
 
-    public void login(String userId, String accessToken) {
+    public void login(SelfModel selfModel) {
         unSubscribeOnDetach(
-                authInteractor.login(userId, accessToken)
+                authInteractor.login(selfModel)
                         .subscribe(loginResponse -> getViewOrThrow().showMainActivity()));
     }
 }

@@ -4,6 +4,7 @@ import com.moggot.spyagent.di.module.AppModule;
 import com.moggot.spyagent.di.module.DataModule;
 import com.moggot.spyagent.di.module.LoginModule;
 import com.moggot.spyagent.di.module.NetModule;
+import com.moggot.spyagent.di.module.RepositoryModule;
 import com.moggot.spyagent.di.module.UserModule;
 import com.moggot.spyagent.presentation.App;
 
@@ -15,10 +16,12 @@ import dagger.Component;
 @Component(modules = {
         AppModule.class,
         NetModule.class,
-        DataModule.class})
+        DataModule.class,
+        RepositoryModule.class})
 public interface AppComponent {
 
     LoginComponent addLoginComponent(LoginModule loginModule);
+
     UserComponent addUserComponent(UserModule userModule);
 
     void inject(App app);
